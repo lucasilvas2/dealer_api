@@ -2,6 +2,7 @@ package com.project.dealer_api.models;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -17,8 +18,8 @@ public class Request {
 
     private Integer status;
     private BigDecimal total_value;
-    private Date date_request;
-    private Date date_pay;
+    private LocalDate date_request;
+    private LocalDate date_pay;
     private Integer method_payment;
     private Boolean delivery;
 
@@ -56,20 +57,28 @@ public class Request {
         this.total_value = total_value;
     }
 
-    public Date getDate_request() {
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public LocalDate getDate_request() {
         return date_request;
     }
 
-    public void setDate_request(Date date_request) {
+    public void setDate_request(LocalDate date_request) {
         this.date_request = date_request;
     }
 
-    public Date getDate_pay() {
+    public LocalDate getDate_pay() {
         return date_pay;
     }
 
-    public void setDate_pay(Date date_pay) {
+    public void setDate_pay(LocalDate date_pay) {
         this.date_pay = date_pay;
+    }
+
+    public void setMethod_payment(Integer method_payment) {
+        this.method_payment = method_payment;
     }
 
     public MethodPayment getMethod_payment() {

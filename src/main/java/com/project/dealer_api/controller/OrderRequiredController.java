@@ -21,9 +21,8 @@ public class OrderRequiredController {
     private OrderRequiredService orderRequiredService;
     private CustomersService customersService;
 
-    public OrderRequiredController(OrderRequiredService orderRequiredService,CustomersService customersService){
+    public OrderRequiredController(OrderRequiredService orderRequiredService){
         this.orderRequiredService = orderRequiredService;
-        this.customersService = customersService;
     }
 
     @PostMapping("/cadastrar/{id_cliente}")

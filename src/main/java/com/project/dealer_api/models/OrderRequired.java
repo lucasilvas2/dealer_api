@@ -19,10 +19,10 @@ public class OrderRequired {
     private Customers customers;
 
     private Integer status;
-    private BigDecimal total_value;
-    private LocalDateTime date_request;
-    private LocalDateTime date_pay;
-    private Integer method_payment;
+    private BigDecimal totalValue;
+    private LocalDateTime dateRequest;
+    private LocalDateTime datePay;
+    private Integer methodPayment;
     private Boolean delivery = false;
 
     public Integer getId() {
@@ -51,37 +51,37 @@ public class OrderRequired {
         }
     }
 
-    public BigDecimal getTotal_value() {
-        return total_value;
+    public BigDecimal getTotalValue() {
+        return totalValue;
     }
 
-    public void setTotal_value(BigDecimal total_value) {
-        this.total_value = total_value;
+    public void setTotalValue(BigDecimal totalValue) {
+        this.totalValue = totalValue;
     }
 
-    public LocalDateTime getDate_request() {
-        return date_request;
+    public LocalDateTime getDateRequest() {
+        return dateRequest;
     }
 
-    public void setDate_request(LocalDateTime date_request) {
-        this.date_request = date_request;
+    public void setDateRequest(LocalDateTime dateRequest) {
+        this.dateRequest = dateRequest;
     }
 
-    public LocalDateTime getDate_pay() {
-        return date_pay;
+    public LocalDateTime getDatePay() {
+        return datePay;
     }
 
-    public void setDate_pay(LocalDateTime date_pay) {
-        this.date_pay = date_pay;
+    public void setDatePay(LocalDateTime datePay) {
+        this.datePay = datePay;
     }
 
-    public MethodPayment getMethod_payment() {
-        return  MethodPayment.valueOf(this.method_payment);
+    public MethodPayment getMethodPayment() {
+        return  MethodPayment.valueOf(this.methodPayment);
     }
 
-    public void setMethod_payment(MethodPayment method_payment) {
-        if(method_payment != null){
-            this.method_payment = method_payment.getCodeMethod();
+    public void setMethodPayment(MethodPayment methodPayment) {
+        if(methodPayment != null){
+            this.methodPayment  = methodPayment.getCodeMethod();
         }
     }
 

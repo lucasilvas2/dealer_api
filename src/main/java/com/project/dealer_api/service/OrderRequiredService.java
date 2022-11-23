@@ -6,6 +6,8 @@ import com.project.dealer_api.repository.OrderRequiredRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -44,5 +46,24 @@ public class OrderRequiredService {
 
     public List<OrderRequired> findByStatus(Integer status){
         return orderRequiredRepository.findByStatus(status);
+    }
+
+    public List<OrderRequired> findByMethodPayment(Integer methodPayment){
+        return orderRequiredRepository.findByMethodPayment(methodPayment);
+    }
+
+    public List<OrderRequired> findByTotalValue(BigDecimal totalValue){
+        return orderRequiredRepository.findByTotalValue(totalValue);
+    }
+
+    public List<OrderRequired> findByTotalValueBetween(BigDecimal primaryTotalValue, BigDecimal secondTotalValue){
+        return orderRequiredRepository.findByTotalValueBetween(primaryTotalValue, secondTotalValue);
+    }
+
+    public List<OrderRequired> findByDateRequest(LocalDateTime dateRequest){
+        return orderRequiredRepository.findByDateRequest(dateRequest);
+    }
+    public List<OrderRequired> findByDatePay(LocalDateTime datePay){
+        return orderRequiredRepository.findByDatePay(datePay);
     }
 }

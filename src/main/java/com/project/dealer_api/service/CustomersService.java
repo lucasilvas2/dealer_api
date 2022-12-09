@@ -56,5 +56,9 @@ public class CustomersService {
         Dealer dealer = dealerService.findById(id_dealer);
         return customersRepository.findByDealer(dealer);
     }
+
+    public List<Customers> findByNameAndEmail(String name, String email){
+        return customersRepository.findByNameAndEmail(name, email);
+    }
 }
 

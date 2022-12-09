@@ -46,4 +46,13 @@ public class CustomersController {
     public ResponseEntity<?> findById(@PathVariable Integer id){
         return ResponseEntity.ok(customersService.findById(id));
     }
+
+    @GetMapping(value = "/buscarPorNome/{name}")
+    public ResponseEntity<?> findById(@PathVariable String name){
+        return ResponseEntity.ok(customersService.findByName(name));
+    }
+    @GetMapping(value = "/buscarPorNomeEmail/{name}/{email}")
+    public ResponseEntity<?> findByNameAndEmail(@PathVariable String name, @PathVariable String email){
+        return ResponseEntity.ok(customersService.findByNameAndEmail(name, email));
+    }
 }

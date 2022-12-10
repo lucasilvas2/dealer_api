@@ -36,7 +36,7 @@
 
 ## 🔎 Pré-requisito
 
-Será necessário ter instalado em sua jdk e jre. Caso não realize o download no site da [Oracle](https://www.oracle.com/br/java/technologies/javase/javase8-archive-downloads.html) escolhendo o arquivo compatível com seu sistema opercaional.
+Será necessário ter instalado em sua jdk e jre. Download pode ser realizado no site da [Oracle](https://www.oracle.com/br/java/technologies/javase/javase8-archive-downloads.html) escolhendo o arquivo compatível com seu sistema opercaional.
 
 ## 🛠️ Tecnologias utilizadas
 

@@ -1,7 +1,9 @@
 package com.project.dealer_api.service;
 
+import com.project.dealer_api.models.Address;
 import com.project.dealer_api.models.Customers;
 import com.project.dealer_api.models.Dealer;
+import com.project.dealer_api.repository.AddressRepository;
 import com.project.dealer_api.repository.CustomersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,12 +17,28 @@ public class CustomersService {
     @Autowired
     public DealerService dealerService;
 
-    public CustomersService(CustomersRepository customersRepository, DealerService dealerService){
+    @Autowired
+    public AddressRepository addressRepository;
+
+    @Autowired
+    public AddressService addressService;
+
+    public CustomersService(CustomersRepository customersRepository, DealerService dealerService, AddressService addressService,AddressRepository addressRepository){
         this.customersRepository = customersRepository;
         this.dealerService = dealerService;
+        this.addressRepository = addressRepository;
+        this.addressService = addressService;
     }
 
-    public Customers create(Customers customers, Integer id_dealer){
+    public Customers create(Customers customers, Integer id_address, Integer id_dealer){
+        customers.setDealer(dealerService.findById(id_dealer));
+        customers.setAddress(addressService.findById(id_address));
+        return customersRepository.save(customers);
+    }
+
+    public Customers createWithAddress(Customers customers, Address address,Integer id_dealer){
+        Address addressSave = addressRepository.save(address);
+        customers.setAddress(addressSave);
         customers.setDealer(dealerService.findById(id_dealer));
         return customersRepository.save(customers);
     }

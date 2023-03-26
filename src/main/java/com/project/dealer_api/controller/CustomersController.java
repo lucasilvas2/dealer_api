@@ -1,15 +1,13 @@
 package com.project.dealer_api.controller;
 
 
+import com.project.dealer_api.models.Address;
 import com.project.dealer_api.models.Customers;
-import com.project.dealer_api.models.Dealer;
+import com.project.dealer_api.models.CustomersBodyRequest;
 import com.project.dealer_api.service.CustomersService;
-import com.project.dealer_api.service.DealerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:3001" })
 @RestController
@@ -21,14 +19,22 @@ public class CustomersController {
         this.customersService = customersService;
     }
 
-    @PostMapping("/cadastrar/{id}")
-    public ResponseEntity<?> create(@RequestBody Customers customers, @PathVariable Integer id){
-        Customers customersSave = customersService.create(customers, id);
+    @PostMapping("/cadastrar/{id_revendendor}/{id_endereco}")
+    public ResponseEntity<?> create(@RequestBody Customers customers, @PathVariable Integer id_dealer, @PathVariable Integer id_address){
+        Customers customersSave = customersService.create(customers, id_address, id_dealer);
         if(customers != null){
             return new ResponseEntity<>(customersSave, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        //return ResponseEntity.ok(customersService.create(customers, id));
+    }
+
+    @PostMapping("/cadastrarComEndereco/{id}/")
+    public ResponseEntity<?> createWithAddress(@RequestBody CustomersBodyRequest customersBodyRequest, @PathVariable Integer id){
+        Customers customersSave = customersService.createWithAddress(customersBodyRequest.getCustomers(), customersBodyRequest.getAddress(), id);
+        if(customersSave != null){
+            return new ResponseEntity<>(customersSave, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
 
     @DeleteMapping

@@ -51,7 +51,6 @@ public class AddressService {
     public List<Address> findByDistrict(String district){
         return addressRepository.findByDistrict(district);
     }
-
     public List<Address> findByStreetAndNumber(String street, String number){
         return addressRepository.findByStreetAndNumber(street, number);
     }

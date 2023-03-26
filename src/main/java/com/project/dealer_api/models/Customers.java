@@ -17,8 +17,8 @@ public class Customers {
     private String phone;
     @Email
     private String email;
-    @Column(columnDefinition = "TEXT")
-    private String address;
+    @ManyToOne
+    private Address address;
 
     public Integer getId() {
         return id;
@@ -60,11 +60,11 @@ public class Customers {
         this.email = email;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 }

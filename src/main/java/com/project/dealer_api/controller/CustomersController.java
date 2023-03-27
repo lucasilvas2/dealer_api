@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = {"http://localhost:3000","http://localhost:3001" })
+@CrossOrigin(origins = "http://localhost:3000" )
 @RestController
 @RequestMapping(value = "/clientes")
 public class CustomersController {
@@ -19,7 +19,7 @@ public class CustomersController {
         this.customersService = customersService;
     }
 
-    @PostMapping("/cadastrar/{id_revendendor}/{id_endereco}")
+    @PostMapping("/cadastrar/{id_dealer}/{id_address}")
     public ResponseEntity<?> create(@RequestBody Customers customers, @PathVariable Integer id_dealer, @PathVariable Integer id_address){
         Customers customersSave = customersService.create(customers, id_address, id_dealer);
         if(customers != null){
@@ -28,9 +28,9 @@ public class CustomersController {
         return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
 
-    @PostMapping("/cadastrarComEndereco/{id}/")
+    @PostMapping("/cadastrarComEndereco/{id}")
     public ResponseEntity<?> createWithAddress(@RequestBody CustomersBodyRequest customersBodyRequest, @PathVariable Integer id){
-        Customers customersSave = customersService.createWithAddress(customersBodyRequest.getCustomers(), customersBodyRequest.getAddress(), id);
+        Customers customersSave = customersService.createWithAddress(customersBodyRequest, id);
         if(customersSave != null){
             return new ResponseEntity<>(customersSave, HttpStatus.OK);
         }

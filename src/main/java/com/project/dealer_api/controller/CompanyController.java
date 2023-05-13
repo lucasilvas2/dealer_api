@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:3001" })
 @RestController
-@RequestMapping(value = "/empresa")
+@RequestMapping(value = "/company")
 public class CompanyController {
     @Autowired
     private CompanyService companyService;
@@ -20,38 +20,38 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
-    @PostMapping(value = "/cadastrar")
+    @PostMapping(value = "/create")
     public ResponseEntity<?> create(@RequestBody Company company){
         return ResponseEntity.ok(companyService.create(company));
     }
 
-    @DeleteMapping
+    @DeleteMapping(value = "/delete/{id_company}")
     public ResponseEntity<?> delete(@PathVariable Integer id_company){
         companyService.delete(id_company);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value = "/buscarPorId/{id_company}")
+    @GetMapping(value = "/findById/{id_company}")
     public ResponseEntity<?> findById(@PathVariable Integer id_company){
         return ResponseEntity.ok(companyService.findById(id_company));
     }
 
-    @GetMapping(value = "/buscarTodos")
+    @GetMapping(value = "/findAll")
     public ResponseEntity<?> findAll(){
         return ResponseEntity.ok(companyService.findAll());
     }
 
-    @GetMapping(value = "/buscarPorNome/{name}")
+    @GetMapping(value = "/findByName/{name}")
     public ResponseEntity<?> findByName(@PathVariable String name){
         return ResponseEntity.ok(companyService.findByName(name));
     }
 
-    @GetMapping(value = "/buscarPorNome/{phone}")
+    @GetMapping(value = "/findByPhone/{phone}")
     public ResponseEntity<?> findByPhone(@PathVariable String phone){
         return ResponseEntity.ok(companyService.findByPhone(phone));
     }
 
-    @GetMapping(value = "/buscarPorNome/{address}")
+    @GetMapping(value = "/findByAddress/{address}")
     public ResponseEntity<?> findByAddress(@PathVariable String address){
         return ResponseEntity.ok(companyService.findByPhone(address));
     }

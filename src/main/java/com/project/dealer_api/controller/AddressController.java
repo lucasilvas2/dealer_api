@@ -12,7 +12,7 @@ import javax.validation.Valid;
 
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:3001" })
 @RestController
-@RequestMapping(value ="/enderecos")
+@RequestMapping(value ="/address")
 public class AddressController {
     @Autowired
     private AddressService addressService;
@@ -21,12 +21,12 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @GetMapping(value = "/buscarPorId/{id}")
+    @GetMapping(value = "/findById/{id}")
     public ResponseEntity<?> findById(@PathVariable Integer id){
         return ResponseEntity.ok(addressService.findById(id));
     }
 
-    @GetMapping(value = "/buscarTodos")
+    @GetMapping(value = "/findAll")
     public ResponseEntity<?> findById(){
         return ResponseEntity.ok(addressService.findAll());
     }
@@ -36,37 +36,37 @@ public class AddressController {
         return ResponseEntity.ok(addressService.create(address));
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id){
         addressService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value = "/buscarPorRua/{rua}")
+    @GetMapping(value = "/findByStree/{rua}")
     public ResponseEntity<?> findByNumber(@PathVariable String rua){
         return ResponseEntity.ok(addressService.findByStreet(rua));
     }
 
-    @GetMapping(value = "/buscarPorNumero/{numero}")
+    @GetMapping(value = "/findByNumber/{numero}")
     public ResponseEntity<?> findBy(@PathVariable String number){
         return ResponseEntity.ok(addressService.findByNumber(number));
     }
 
-    @GetMapping(value = "/buscarPorCidate/{cidade}")
+    @GetMapping(value = "/findByCity/{cidade}")
     public ResponseEntity<?> findByCity(@PathVariable String city){
         return ResponseEntity.ok(addressService.findByCity(city));
     }
 
-    @GetMapping(value = "/buscarPorCodigoPostal/{codigoPostal}")
+    @GetMapping(value = "/findByPostalCode/{codigoPostal}")
     public ResponseEntity<?> findByPostalCode(@PathVariable String postalCode){
         return ResponseEntity.ok(addressService.findByPostalCode(postalCode));
     }
 
-    @GetMapping(value = "/buscarPorBairro/{bairro}")
+    @GetMapping(value = "/findByDistrict/{bairro}")
     public ResponseEntity<?> findByDistrict(@PathVariable String district){
         return ResponseEntity.ok(addressService.findByDistrict(district));
     }
-    @GetMapping(value = "/buscarPorRuaENumero/{rua}/{numero}")
+    @GetMapping(value = "/findByStreetAndNumber/{rua}/{numero}")
     public ResponseEntity<?> findByStreetAndNumber(@PathVariable String street, @PathVariable String number){
         return ResponseEntity.ok(addressService.findByStreetAndNumber(street, number));
     }

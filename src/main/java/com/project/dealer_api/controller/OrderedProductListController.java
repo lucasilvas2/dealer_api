@@ -9,12 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:3001" })
 @RestController
-@RequestMapping(value = "/listaProdutosPedidos")
+@RequestMapping(value = "/orderProductList")
 public class OrderedProductListController {
 
     @Autowired
@@ -24,7 +21,7 @@ public class OrderedProductListController {
         this.orderedProductListService = orderedProductListService;
     }
 
-    @PostMapping("/cadastrar/{id_ordered}/{id_company}")
+    @PostMapping("/create/{id_ordered}/{id_company}")
     public ResponseEntity<?> create(@RequestBody OrderedProductList orderedProductList, @PathVariable Integer id_ordered, @PathVariable Integer id_company){
         OrderedProductList orderedProductListSave = orderedProductListService.create(orderedProductList, id_ordered, id_company);
         if(orderedProductList != null){
@@ -33,44 +30,44 @@ public class OrderedProductListController {
         return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
 
-    @DeleteMapping
+    @DeleteMapping(value = "/delete/{id_orderedProductList}")
     public ResponseEntity<?> delete(@PathVariable Integer id_orderedProductList){
         orderedProductListService.delete(id_orderedProductList);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value = "/buscarPorId")
+    @GetMapping(value = "/findById/{id_orderedProductList}")
     public ResponseEntity<?> findById(@PathVariable Integer id_orderedProductList){
         return ResponseEntity.ok(orderedProductListService.findById(id_orderedProductList));
     }
 
-    @GetMapping(value = "/buscarTodos")
+    @GetMapping(value = "/findAll")
     public ResponseEntity<?> findAll(){
         return ResponseEntity.ok(orderedProductListService.findAll());
     }
 
-    @GetMapping(value = "/buscarPorPedido/{id_orderRequired}")
+    @GetMapping(value = "/findByOrder/{id_orderRequired}")
     public ResponseEntity<?> findByOrderRequired(@PathVariable Integer id_orderRequired){
         return ResponseEntity.ok(orderedProductListService.findByOrderRequired(id_orderRequired));
     }
 
-    @GetMapping(value = "/buscarPorEmpresa/{id_company}")
+    @GetMapping(value = "/findByCompany/{id_company}")
     public ResponseEntity<?> findByCompany(@PathVariable Integer id_company){
         return ResponseEntity.ok(orderedProductListService.findByCompany(id_company));
     }
-    @GetMapping(value = "/buscarPorNomeDoProduto/{product_name}")
+    @GetMapping(value = "/findByProductName/{product_name}")
     public ResponseEntity<?> findByProductName(@PathVariable String product_name){
         return ResponseEntity.ok(orderedProductListService.findByProductName(product_name));
     }
-    @GetMapping(value = "/buscarPorPreco/{price}")
+    @GetMapping(value = "/findByPrice/{price}")
     public ResponseEntity<?> findByPrice(@PathVariable BigDecimal price){
         return ResponseEntity.ok(orderedProductListService.findByPrice(price));
     }
-    @GetMapping(value = "/buscarPorCodigo/{code}")
+    @GetMapping(value = "/findByCode/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code){
         return ResponseEntity.ok(orderedProductListService.findByCode(code));
     }
-    @GetMapping(value = "/buscarPorQuantidade/{amount}")
+    @GetMapping(value = "/findByAmount/{amount}")
     public ResponseEntity<?> findByAmount(@PathVariable Integer amount){
         return ResponseEntity.ok(orderedProductListService.findByAmount(amount));
     }

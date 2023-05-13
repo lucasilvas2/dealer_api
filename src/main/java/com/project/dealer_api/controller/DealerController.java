@@ -11,7 +11,7 @@ import javax.validation.Valid;
 
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:3001" })
 @RestController
-@RequestMapping(value ="/revendedor")
+@RequestMapping(value ="/dealer")
 public class DealerController {
     @Autowired
     private DealerService dealerService;
@@ -20,22 +20,22 @@ public class DealerController {
         this.dealerService = dealerService;
     }
 
-    @GetMapping(value = "/buscarPorId/{id}")
+    @GetMapping(value = "/findById/{id}")
     public ResponseEntity<?> findById(@PathVariable Integer id){
         return ResponseEntity.ok(dealerService.findById(id));
     }
 
-    @GetMapping(value = "/buscarTodos")
+    @GetMapping(value = "/findAll")
     public ResponseEntity<?> findAll(){
         return ResponseEntity.ok(dealerService.findAll());
     }
 
-    @PostMapping
+    @PostMapping(value = "/create")
     public ResponseEntity<?> create(@RequestBody @Valid Dealer dealer){
         return ResponseEntity.ok(dealerService.create(dealer));
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id){
         dealerService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

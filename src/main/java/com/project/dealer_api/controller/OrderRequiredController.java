@@ -18,7 +18,7 @@ import java.time.ZonedDateTime;
 
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:3001" })
 @RestController
-@RequestMapping(value = "/pedido")
+@RequestMapping(value = "/OrderRequired")
 public class OrderRequiredController {
     @Autowired
     private OrderRequiredService orderRequiredService;
@@ -28,60 +28,59 @@ public class OrderRequiredController {
         this.orderRequiredService = orderRequiredService;
     }
 
-    @PostMapping("/cadastrar/{id_cliente}")
-    public ResponseEntity<?> create(@RequestBody OrderRequired orderRequired, @PathVariable Integer id_cliente){
+    @PostMapping("/create/{id_customer}")
+    public ResponseEntity<?> create(@RequestBody OrderRequired orderRequired, @PathVariable Integer id_customer){
         orderRequired.setDateRequest(LocalDateTime.from(ZonedDateTime.now()));
-        OrderRequired orderRequiredSave = orderRequiredService.create(orderRequired, id_cliente);
+        OrderRequired orderRequiredSave = orderRequiredService.create(orderRequired, id_customer);
         if(orderRequired != null){
             return new ResponseEntity<>(orderRequiredSave, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        //return ResponseEntity.ok(customersService.create(customers, id));
     }
 
-    @DeleteMapping
+    @DeleteMapping(value = "/delete/{id_customer}")
     public ResponseEntity<?> delete(@PathVariable Integer id_customer){
         orderRequiredService.delete(id_customer);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value = "/buscarPorId/{id_customer}")
+    @GetMapping(value = "/findById/{id_customer}")
     public ResponseEntity<?> findById(@PathVariable Integer id_customer){
         return ResponseEntity.ok(orderRequiredService.findById(id_customer));
     }
 
-    @GetMapping(value = "/buscarTodos")
+    @GetMapping(value = "/findAll")
     public ResponseEntity<?> findAll(){
         return ResponseEntity.ok(orderRequiredService.findAll());
     }
 
-    @GetMapping(value = "/buscarPorCliente/{id_customer}")
-    public ResponseEntity<?> findByCustomers(@PathVariable Integer id_customer){
+    @GetMapping(value = "/findByCustomer/{id_customer}")
+    public ResponseEntity<?> findByCustomer(@PathVariable Integer id_customer){
         return ResponseEntity.ok(orderRequiredService.findByCustomers(id_customer));
     }
 
-    @GetMapping(value = "/buscarPorStatus/{status}")
+    @GetMapping(value = "/findByStatus/{status}")
     public ResponseEntity<?> findByStatus(@PathVariable Integer status){
         return ResponseEntity.ok(orderRequiredService.findByStatus(status));
     }
 
-    @GetMapping(value = "/buscarPorMetodoDePagamento/{methodPayment}")
+    @GetMapping(value = "/findByMethodPayment/{methodPayment}")
     public ResponseEntity<?> findByMethodPayment(@PathVariable Integer methodPayment){
         return ResponseEntity.ok(orderRequiredService.findByMethodPayment(methodPayment));
     }
-    @GetMapping(value = "/buscarPorValorTotal/{valueTotal}")
+    @GetMapping(value = "/findByTotalValue/{valueTotal}")
     public ResponseEntity<?> findByTotalValue(@PathVariable BigDecimal valueTotal){
         return ResponseEntity.ok(orderRequiredService.findByTotalValue(valueTotal));
     }
-    @GetMapping(value = "/buscarEntreDoisValoresTotais/{primaryValue}/{secondValue}")
+    @GetMapping(value = "/findByValueTotalBetween/{primaryValue}/{secondValue}")
     public ResponseEntity<?> findByValueTotalBetween(@PathVariable BigDecimal primaryValue, @PathVariable BigDecimal secondValue){
         return ResponseEntity.ok(orderRequiredService.findByTotalValueBetween(primaryValue, secondValue));
     }
-    @GetMapping(value = "/buscarPorDataSolicitacaoPedido/{dateRequest}")
+    @GetMapping(value = "/findByDateRequest/{dateRequest}")
     public ResponseEntity<?> findByDateRequest(@PathVariable  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateRequest){
         return ResponseEntity.ok(orderRequiredService.findByDateRequest(dateRequest));
     }
-    @GetMapping(value = "/buscarPorDataPagamentoEfetuado/{datePay}")
+    @GetMapping(value = "/findByDatePay/{datePay}")
     public ResponseEntity<?> findByDatePay(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime datePay){
         return ResponseEntity.ok(orderRequiredService.findByDatePay(datePay));
     }

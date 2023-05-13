@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomersService {
@@ -37,12 +38,13 @@ public class CustomersService {
         return customersRepository.save(customers);
     }
 
-//    public Customers createWithAddress(Customers customers, Address address,Integer id_dealer){
-//        Address addressSave = addressRepository.save(address);
-//        customers.setAddress(addressSave);
-//        customers.setDealer(dealerService.findById(id_dealer));
-//        return customersRepository.save(customers);
-//    }
+    public Customers update(Customers customers, Integer id_customer, Integer id_address, Integer id_dealer){
+        customers.setId(id_customer);
+        customers.setDealer(dealerService.findById(id_dealer));
+        customers.setAddress(addressService.findById(id_address));
+        return customersRepository.save(customers);
+    }
+
     public Customers createWithAddress(CustomersBodyRequest customersBodyRequest, Integer id_dealer){
         Customers newCustomers = new Customers();
         newCustomers.setName(customersBodyRequest.getName());

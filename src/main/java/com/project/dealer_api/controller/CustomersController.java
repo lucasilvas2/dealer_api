@@ -1,9 +1,8 @@
 package com.project.dealer_api.controller;
 
 
-import com.project.dealer_api.models.Address;
 import com.project.dealer_api.models.Customers;
-import com.project.dealer_api.models.CustomersBodyRequest;
+import com.project.dealer_api.request.CustomersDTO;
 import com.project.dealer_api.service.CustomersService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +27,9 @@ public class CustomersController {
         return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
 
-    @PostMapping("/update/{id_customer}/{id_dealer}/{id_address}")
-    public ResponseEntity<?> update(@RequestBody Customers customers, @PathVariable Integer id_customer, @PathVariable Integer id_dealer, @PathVariable Integer id_address){
-        Customers customersSave =  customersService.update(customers, id_customer,id_address, id_dealer);
+    @PostMapping("/update/{id_customer}/{id_dealer}")
+    public ResponseEntity<?> update(@RequestBody Customers customers, @PathVariable Integer id_customer, @PathVariable Integer id_dealer){
+        Customers customersSave =  customersService.update(customers, id_customer, id_dealer);
         if(customers != null){
             return new ResponseEntity<>(customersSave, HttpStatus.OK);
         }
@@ -38,8 +37,18 @@ public class CustomersController {
     }
 
     @PostMapping("/createWithAddress/{id}")
-    public ResponseEntity<?> createWithAddress(@RequestBody CustomersBodyRequest customersBodyRequest, @PathVariable Integer id){
-        Customers customersSave = customersService.createWithAddress(customersBodyRequest, id);
+    public ResponseEntity<?> createWithAddress(@RequestBody CustomersDTO customersDTO, @PathVariable Integer id){
+        //return new ResponseEntity<>(customersBodyRequest, HttpStatus.OK);
+        Customers customersSave = customersService.createWithAddress(customersDTO, id);
+        if(customersSave != null){
+            return new ResponseEntity<>(customersSave, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @PostMapping("/updateWithAddress/{id_customer}/{id_address}/{id_dealer}")
+    public ResponseEntity<?> updateWithAddress(@RequestBody CustomersDTO customersDTO, @PathVariable Integer id_customer, @PathVariable Integer id_address, @PathVariable Integer id_dealer){
+        Customers customersSave = customersService.updateWithAddress(customersDTO, id_customer, id_address, id_dealer);
         if(customersSave != null){
             return new ResponseEntity<>(customersSave, HttpStatus.OK);
         }

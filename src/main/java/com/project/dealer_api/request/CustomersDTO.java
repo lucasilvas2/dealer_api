@@ -1,8 +1,11 @@
-package com.project.dealer_api.models;
+package com.project.dealer_api.request;
 
-import javax.validation.constraints.Pattern;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.project.dealer_api.models.Address;
+import com.project.dealer_api.models.Customers;
 
-public class CustomersBodyRequest {
+public class CustomersDTO {
     private String name;
     private String phone;
     private String email;
@@ -14,7 +17,19 @@ public class CustomersBodyRequest {
     private String country;
     private String postalCode;
 
-    public CustomersBodyRequest(String name, String phone, String email, String street, String number, String district, String city, String state, String country, String postalCode) {
+    @JsonCreator
+    public CustomersDTO(
+            @JsonProperty("name") String name,
+            @JsonProperty("phone") String phone,
+            @JsonProperty("email") String email,
+            @JsonProperty("street") String street,
+            @JsonProperty("number") String number,
+            @JsonProperty("district") String district,
+            @JsonProperty("city") String city,
+            @JsonProperty("state") String state,
+            @JsonProperty("country") String country,
+            @JsonProperty("postalCode") String postalCode
+    ) {
         this.name = name;
         this.phone = phone;
         this.email = email;

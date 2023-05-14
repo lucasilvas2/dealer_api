@@ -2,7 +2,7 @@ package com.project.dealer_api.service;
 
 import com.project.dealer_api.models.Address;
 import com.project.dealer_api.models.Customers;
-import com.project.dealer_api.models.CustomersBodyRequest;
+import com.project.dealer_api.request.CustomersDTO;
 import com.project.dealer_api.models.Dealer;
 import com.project.dealer_api.repository.AddressRepository;
 import com.project.dealer_api.repository.CustomersRepository;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomersService {
@@ -37,33 +36,55 @@ public class CustomersService {
         customers.setAddress(addressService.findById(id_address));
         return customersRepository.save(customers);
     }
-
-    public Customers update(Customers customers, Integer id_customer, Integer id_address, Integer id_dealer){
-        customers.setId(id_customer);
-        customers.setDealer(dealerService.findById(id_dealer));
-        customers.setAddress(addressService.findById(id_address));
-        return customersRepository.save(customers);
-    }
-
-    public Customers createWithAddress(CustomersBodyRequest customersBodyRequest, Integer id_dealer){
+    public Customers createWithAddress(CustomersDTO customersDTO, Integer id_dealer){
         Customers newCustomers = new Customers();
-        newCustomers.setName(customersBodyRequest.getName());
-        newCustomers.setEmail(customersBodyRequest.getEmail());
-        newCustomers.setPhone(customersBodyRequest.getPhone());
+        newCustomers.setName(customersDTO.getName());
+        newCustomers.setEmail(customersDTO.getEmail());
+        newCustomers.setPhone(customersDTO.getPhone());
 
         Address newAddress = new Address();
-        newAddress.setStreet(customersBodyRequest.getStreet());
-        newAddress.setNumber(customersBodyRequest.getNumber());
-        newAddress.setDistrict(customersBodyRequest.getDistrict());
-        newAddress.setCity(customersBodyRequest.getCity());
-        newAddress.setState(customersBodyRequest.getState());
-        newAddress.setCountry(customersBodyRequest.getCountry());
-        newAddress.setPostalCode(customersBodyRequest.getPostalCode());
+        newAddress.setStreet(customersDTO.getStreet());
+        newAddress.setNumber(customersDTO.getNumber());
+        newAddress.setDistrict(customersDTO.getDistrict());
+        newAddress.setCity(customersDTO.getCity());
+        newAddress.setState(customersDTO.getState());
+        newAddress.setCountry(customersDTO.getCountry());
+        newAddress.setPostalCode(customersDTO.getPostalCode());
         Address addressSave = addressRepository.save(newAddress);
 
         newCustomers.setAddress(addressSave);
         newCustomers.setDealer(dealerService.findById(id_dealer));
         return customersRepository.save(newCustomers);
+    }
+
+    public Customers update(Customers customers, Integer id_customer, Integer id_dealer){
+        customers.setId(id_customer);
+        customers.setDealer(dealerService.findById(id_dealer));
+        customers.setAddress(customers.getAddress());
+        return customersRepository.save(customers);
+    }
+
+    public Customers updateWithAddress(CustomersDTO customersDTO, Integer id_customer, Integer id_address, Integer id_dealer){
+        Customers customers = new Customers();
+        customers.setId(id_customer);
+        customers.setName(customersDTO.getName());
+        customers.setEmail(customersDTO.getEmail());
+        customers.setPhone(customersDTO.getPhone());
+
+        Address address = new Address();
+        address.setId(id_address);
+        address.setStreet(customersDTO.getStreet());
+        address.setNumber(customersDTO.getNumber());
+        address.setDistrict(customersDTO.getDistrict());
+        address.setCity(customersDTO.getCity());
+        address.setState(customersDTO.getState());
+        address.setCountry(customersDTO.getCountry());
+        address.setPostalCode(customersDTO.getPostalCode());
+        Address addressSave = addressRepository.save(address);
+
+        customers.setDealer(dealerService.findById(id_dealer));
+        customers.setAddress(addressSave);
+        return customersRepository.save(customers);
     }
 
     public void delete(Integer id_customers){

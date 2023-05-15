@@ -1,6 +1,7 @@
 package com.project.dealer_api.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Entity
 public class Company {
@@ -10,7 +11,9 @@ public class Company {
     @Column(unique = true)
     private String name;
     private String phone;
-    private String address;
+
+    @Email
+    private String email;
 
     public Integer getId() {
         return id;
@@ -36,12 +39,12 @@ public class Company {
         this.phone = phone;
     }
 
-    public String getAddress() {
-        return address;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
 

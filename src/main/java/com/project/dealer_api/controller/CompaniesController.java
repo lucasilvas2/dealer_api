@@ -2,21 +2,19 @@ package com.project.dealer_api.controller;
 
 import com.project.dealer_api.models.Company;
 import com.project.dealer_api.service.CompanyService;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:3001" })
 @RestController
-@RequestMapping(value = "/company")
-public class CompanyController {
+@RequestMapping(value = "/companies")
+public class CompaniesController {
     @Autowired
     private CompanyService companyService;
 
-    public CompanyController(CompanyService companyService){
+    public CompaniesController(CompanyService companyService){
         this.companyService = companyService;
     }
 

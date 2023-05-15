@@ -39,9 +39,8 @@ public class CompanyService {
     public List<Company> findByPhone(String phone){
         return companyRepository.findByPhone(phone);
     }
-
-    public List<Company> findByAddress(String address){
-        return companyRepository.findByAddress(address);
+    public List<Company> findByEmail(String email){
+        return companyRepository.findByEmail(email);
     }
 
 }

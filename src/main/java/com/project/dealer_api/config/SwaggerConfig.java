@@ -3,11 +3,12 @@ package com.project.dealer_api.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.*;
-import springfox.documentation.service.AuthorizationScope;
-import springfox.documentation.service.GrantType;
-import springfox.documentation.service.SecurityReference;
-import springfox.documentation.service.SecurityScheme;
+
+import org.springframework.http.ResponseEntity;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -15,23 +16,14 @@ import springfox.documentation.swagger.web.SecurityConfiguration;
 import springfox.documentation.swagger.web.SecurityConfigurationBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
 
-//    @Bean
-//    public Docket api(){
-//        return new Docket(DocumentationType.SWAGGER_2)
-//                .select()
-//                .apis(RequestHandlerSelectors.any())
-//                .paths(PathSelectors.any())
-//                .build();
-//    }
-//
     @Value("${security.oauth2.client.client-id}")
     private String clientId;
 
@@ -42,18 +34,24 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
+                .apis(RequestHandlerSelectors.any())
                 .build()
-                .securitySchemes(Collections.singletonList(securityScheme()))
-                .securityContexts(Collections.singletonList(securityContext()));
+                .securitySchemes(Arrays.asList(apiKey()))
+                .securityContexts(Arrays.asList(securityContext()))
+                .apiInfo(apiInfo())
+                .pathMapping("/")
+                .useDefaultResponseMessages(false)
+                .directModelSubstitute(LocalDate.class, String.class)
+                .genericModelSubstitutes(ResponseEntity.class);
     }
 
-    private SecurityScheme securityScheme() {
-        GrantType grantType = new AuthorizationCodeGrantBuilder()
-                .tokenEndpoint(new TokenEndpointBuilder().url("/oauth/token").build())
-                .tokenRequestEndpoint(
-                        new TokenRequestEndpointBuilder().url("/oauth/authorize").clientIdName("clientId").clientSecretName("clientSecret").build())
+    ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("Swagger with Spring Boot + Security")
+                .version("1.0.0")
+                .description("Your Description")
+                .contact(new Contact("Contact Name", "Contact_URL","contact@email.com"))
                 .build();
 
         SecurityScheme oauth = new OAuthBuilder().name("oauth2")
@@ -64,43 +62,18 @@ public class SwaggerConfig {
         return oauth;
     }
 
-    private AuthorizationScope[] scopes() {
-        AuthorizationScope[] scopes = {
-                new AuthorizationScope("read", "Read access"),
-                new AuthorizationScope("write", "Write access"),
-        };
-        return scopes;
+    private ApiKey apiKey() {
+        return new ApiKey("JWT", "Authorization", "header");
     }
 
     private SecurityContext securityContext() {
-        return SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.any())
-                .build();
+        return SecurityContext.builder().securityReferences(defaultAuth()).build();
     }
 
     private List<SecurityReference> defaultAuth() {
-        AuthorizationScope[] scopes = {
-                new AuthorizationScope("read", "Read access"),
-                new AuthorizationScope("write", "Write access")
-        };
-
-        return Collections.singletonList(
-                SecurityReference.builder()
-                        .reference("oauth2")
-                        .scopes(scopes)
-                        .build()
-        );
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
     }
-
-    @Bean
-    public SecurityConfiguration security() {
-        return SecurityConfigurationBuilder.builder()
-                .clientId(clientId)
-                .clientSecret(clientSecret)
-                .realm("realm")
-                .appName("appName")
-                .build();
-    }
-
 }

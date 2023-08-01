@@ -1,4 +1,4 @@
-package com.project.dealer_api.models;
+package com.project.dealer_api.domain.user;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

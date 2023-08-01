@@ -1,4 +1,7 @@
-package com.project.dealer_api.models;
+package com.project.dealer_api.domain.ordered;
+
+import com.project.dealer_api.domain.company.Company;
+import com.project.dealer_api.domain.order.OrderRequired;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

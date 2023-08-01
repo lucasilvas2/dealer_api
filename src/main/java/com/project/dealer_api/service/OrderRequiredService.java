@@ -1,7 +1,7 @@
 package com.project.dealer_api.service;
 
-import com.project.dealer_api.models.Customers;
-import com.project.dealer_api.models.OrderRequired;
+import com.project.dealer_api.domain.customers.Customers;
+import com.project.dealer_api.domain.order.OrderRequired;
 import com.project.dealer_api.repository.OrderRequiredRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

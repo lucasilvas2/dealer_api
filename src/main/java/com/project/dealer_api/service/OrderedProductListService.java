@@ -1,8 +1,8 @@
 package com.project.dealer_api.service;
 
-import com.project.dealer_api.models.Company;
-import com.project.dealer_api.models.OrderRequired;
-import com.project.dealer_api.models.OrderedProductList;
+import com.project.dealer_api.domain.company.Company;
+import com.project.dealer_api.domain.order.OrderRequired;
+import com.project.dealer_api.domain.ordered.OrderedProductList;
 import com.project.dealer_api.repository.OrderedProductListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

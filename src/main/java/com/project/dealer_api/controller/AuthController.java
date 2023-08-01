@@ -3,7 +3,7 @@ package com.project.dealer_api.controller;
 import com.project.dealer_api.domain.user.DataAuth;
 import com.project.dealer_api.infra.security.DataTokeJWT;
 import com.project.dealer_api.infra.security.TokenService;
-import com.project.dealer_api.models.Users;
+import com.project.dealer_api.domain.user.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

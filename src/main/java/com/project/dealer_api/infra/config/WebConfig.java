@@ -1,4 +1,4 @@
-package com.project.dealer_api.config;
+package com.project.dealer_api.infra.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

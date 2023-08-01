@@ -1,11 +1,10 @@
-package com.project.dealer_api.models;
+package com.project.dealer_api.domain.order;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.bind.DefaultValue;
+import com.project.dealer_api.domain.customers.Customers;
+import com.project.dealer_api.domain.ordered.MethodPayment;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity

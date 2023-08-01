@@ -41,7 +41,7 @@ public class SecurityConfigurations {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST, "/login").permitAll()
+                        .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .antMatchers(AUTH_WHITELIST).permitAll()
                         .anyRequest().authenticated()
                 )

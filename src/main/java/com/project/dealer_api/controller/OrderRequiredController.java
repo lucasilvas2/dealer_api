@@ -1,8 +1,6 @@
 package com.project.dealer_api.controller;
 
-import com.project.dealer_api.models.Customers;
-import com.project.dealer_api.models.MethodPayment;
-import com.project.dealer_api.models.OrderRequired;
+import com.project.dealer_api.domain.order.OrderRequired;
 import com.project.dealer_api.service.CustomersService;
 import com.project.dealer_api.service.OrderRequiredService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 

@@ -1,9 +1,9 @@
-package com.project.dealer_api.request;
+package com.project.dealer_api.domain.company;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.project.dealer_api.models.Address;
-import com.project.dealer_api.models.Customers;
+import com.project.dealer_api.domain.address.Address;
+import com.project.dealer_api.domain.customers.Customers;
 
 public class CompanyDTO {
     private String name;

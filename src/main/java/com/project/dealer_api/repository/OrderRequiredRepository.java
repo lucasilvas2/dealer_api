@@ -1,7 +1,7 @@
 package com.project.dealer_api.repository;
 
-import com.project.dealer_api.models.*;
-import org.aspectj.weaver.ast.Or;
+import com.project.dealer_api.domain.customers.Customers;
+import com.project.dealer_api.domain.order.OrderRequired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

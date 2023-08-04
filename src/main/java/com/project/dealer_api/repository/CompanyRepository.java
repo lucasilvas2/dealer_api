@@ -1,6 +1,6 @@
 package com.project.dealer_api.repository;
 
-import com.project.dealer_api.models.Company;
+import com.project.dealer_api.domain.company.Company;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

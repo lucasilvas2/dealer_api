@@ -1,6 +1,6 @@
 package com.project.dealer_api.service;
 
-import com.project.dealer_api.models.Company;
+import com.project.dealer_api.domain.company.Company;
 import com.project.dealer_api.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

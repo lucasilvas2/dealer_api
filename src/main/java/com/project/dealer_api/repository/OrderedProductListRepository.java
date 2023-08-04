@@ -1,8 +1,8 @@
 package com.project.dealer_api.repository;
 
-import com.project.dealer_api.models.Company;
-import com.project.dealer_api.models.OrderRequired;
-import com.project.dealer_api.models.OrderedProductList;
+import com.project.dealer_api.domain.company.Company;
+import com.project.dealer_api.domain.order.OrderRequired;
+import com.project.dealer_api.domain.ordered.OrderedProductList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

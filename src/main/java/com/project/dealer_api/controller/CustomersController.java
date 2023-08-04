@@ -1,9 +1,12 @@
 package com.project.dealer_api.controller;
 
 
-import com.project.dealer_api.models.Customers;
-import com.project.dealer_api.request.CustomersDTO;
+import com.project.dealer_api.domain.customers.Customers;
+import com.project.dealer_api.domain.customers.CustomersDTO;
+import com.project.dealer_api.domain.customers.CustomersListDTO;
 import com.project.dealer_api.service.CustomersService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,8 +65,9 @@ public class CustomersController {
     }
 
     @GetMapping(value = "/findAll")
-    public ResponseEntity<?> findAll(){
-        return ResponseEntity.ok(customersService.findAll());
+    public ResponseEntity<Page<CustomersListDTO>> findAll(Pageable pageable){
+        var list = customersService.findAll(pageable).map(CustomersListDTO::new);
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping(value = "/findById/{id}")

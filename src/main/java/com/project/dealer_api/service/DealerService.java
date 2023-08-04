@@ -1,8 +1,10 @@
 package com.project.dealer_api.service;
 
-import com.project.dealer_api.models.Dealer;
+import com.project.dealer_api.domain.dealer.Dealer;
 import com.project.dealer_api.repository.DealerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,8 +26,8 @@ public class DealerService {
         dealerRepository.deleteById(id_dealer);
     }
 
-    public List<Dealer> findAll(){
-        return dealerRepository.findAll();
+    public Page<Dealer> findAll(Pageable pageable){
+        return dealerRepository.findAll(pageable);
     }
 
     public Dealer findById(Integer id_dealer){

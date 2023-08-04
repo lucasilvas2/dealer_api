@@ -1,24 +1,19 @@
-package com.project.dealer_api.models;
+package com.project.dealer_api.domain.company;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 
 @Entity
-public class Customers {
+public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @ManyToOne
-    private Dealer dealer;
-    @Column(columnDefinition = "TEXT")
+    @Column(unique = true)
     private String name;
-    @Column(columnDefinition = "TEXT")
     private String phone;
+
     @Email
     private String email;
-    @ManyToOne
-    private Address address;
 
     public Integer getId() {
         return id;
@@ -26,14 +21,6 @@ public class Customers {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public void setDealer(Dealer dealer) {
-        this.dealer = dealer;
     }
 
     public String getName() {
@@ -59,12 +46,5 @@ public class Customers {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
 }
+

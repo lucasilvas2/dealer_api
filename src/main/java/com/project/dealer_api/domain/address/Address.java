@@ -1,4 +1,4 @@
-package com.project.dealer_api.models;
+package com.project.dealer_api.domain.address;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

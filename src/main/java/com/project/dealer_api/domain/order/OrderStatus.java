@@ -1,4 +1,4 @@
-package com.project.dealer_api.models;
+package com.project.dealer_api.domain.order;
 
 public enum OrderStatus {
 //    PENDENTE, SOLICITADO_NA_LOJA, CANCELADO,ENTREGUE, AGUARDANDO_PAGAMENTO,PAGO, FINALIZADO;

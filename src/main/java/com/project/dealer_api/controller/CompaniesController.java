@@ -1,6 +1,6 @@
 package com.project.dealer_api.controller;
 
-import com.project.dealer_api.models.Company;
+import com.project.dealer_api.domain.company.Company;
 import com.project.dealer_api.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

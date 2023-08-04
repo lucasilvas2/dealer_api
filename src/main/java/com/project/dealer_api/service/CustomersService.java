@@ -1,12 +1,14 @@
 package com.project.dealer_api.service;
 
-import com.project.dealer_api.models.Address;
-import com.project.dealer_api.models.Customers;
-import com.project.dealer_api.request.CustomersDTO;
-import com.project.dealer_api.models.Dealer;
+import com.project.dealer_api.domain.address.Address;
+import com.project.dealer_api.domain.customers.Customers;
+import com.project.dealer_api.domain.customers.CustomersDTO;
+import com.project.dealer_api.domain.dealer.Dealer;
 import com.project.dealer_api.repository.AddressRepository;
 import com.project.dealer_api.repository.CustomersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -91,8 +93,8 @@ public class CustomersService {
         customersRepository.deleteById(id_customers);
     }
 
-    public List<Customers> findAll(){
-        return customersRepository.findAll();
+    public Page<Customers> findAll(Pageable pageable){
+        return customersRepository.findAll(pageable);
     }
 
     public Customers findById(Integer id_customer){

@@ -1,4 +1,4 @@
-package com.project.dealer_api.models;
+package com.project.dealer_api.domain.ordered;
 
 public enum MethodPayment {
     ESPECIE(1), ESPECIE_PARELADO(2),CARTAO_DEBITO(3), CARTAO_PARCELADO(4), PIX(5), PIX_PARCELADO(6);

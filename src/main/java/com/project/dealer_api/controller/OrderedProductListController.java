@@ -1,7 +1,6 @@
 package com.project.dealer_api.controller;
 
-import com.project.dealer_api.models.OrderRequired;
-import com.project.dealer_api.models.OrderedProductList;
+import com.project.dealer_api.domain.ordered.OrderedProductList;
 import com.project.dealer_api.service.OrderedProductListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

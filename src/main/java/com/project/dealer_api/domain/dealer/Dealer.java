@@ -1,8 +1,17 @@
 package com.project.dealer_api.domain.dealer;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Dealer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,19 +20,13 @@ public class Dealer {
     @Column(columnDefinition = "TEXT")
     private String name;
 
-    public Integer getId() {
-        return id;
+    public Dealer(DealerCreateDTO dealerCreateDTO) {
+        this.name = dealerCreateDTO.name();
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void update(DealerUpdateDTO dealerUpdateDTO) {
+        if(dealerUpdateDTO.name() != null){
+            this.setName(dealerUpdateDTO.name());
+        }
     }
 }

@@ -66,8 +66,8 @@ public class CustomersController {
 
     @GetMapping(value = "/findAll")
     public ResponseEntity<Page<CustomersListDTO>> findAll(Pageable pageable){
-        var page = customersService.findAll(pageable).map(CustomersListDTO::new);
-        return ResponseEntity.ok(page);
+        var list = customersService.findAll(pageable).map(CustomersListDTO::new);
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping(value = "/findById/{id}")

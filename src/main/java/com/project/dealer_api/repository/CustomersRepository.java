@@ -3,17 +3,18 @@ package com.project.dealer_api.repository;
 import com.project.dealer_api.domain.customers.Customers;
 import com.project.dealer_api.domain.dealer.Dealer;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
 public interface CustomersRepository extends JpaRepository<Customers, Integer> {
-    List<Customers> findByName(String name);
-    List<Customers> findByPhone(String phone);
-    List<Customers> findByEmail(String email);
-    List<Customers> findByAddress(String address);
-    List<Customers> findByDealer(Dealer dealer);
+    Page<Customers> findByName(String name, Pageable pageable);
+    Page<Customers> findByPhone(String phone, Pageable pageable);
+    Page<Customers> findByEmail(String email, Pageable pageable);
+    Page<Customers> findByAddress(String address, Pageable pageable);
+    Page<Customers> findByDealer(Dealer dealer, Pageable pageable);
 
-    List<Customers> findByNameAndEmail(String name, String email);
+    Page<Customers> findByNameAndEmail(String name, String email, Pageable pageable);
 }

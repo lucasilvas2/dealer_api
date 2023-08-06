@@ -1,15 +1,17 @@
 package com.project.dealer_api.controller;
 
 
-import com.project.dealer_api.domain.customers.Customers;
-import com.project.dealer_api.domain.customers.CustomersDTO;
-import com.project.dealer_api.domain.customers.CustomersListDTO;
+import com.project.dealer_api.domain.customers.*;
 import com.project.dealer_api.service.CustomersService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:3000" )
 @RestController
@@ -21,22 +23,38 @@ public class CustomersController {
         this.customersService = customersService;
     }
 
-    @PostMapping("/create/{id_dealer}/{id_address}")
-    public ResponseEntity<?> create(@RequestBody Customers customers, @PathVariable Integer id_dealer, @PathVariable Integer id_address){
-        Customers customersSave = customersService.create(customers, id_address, id_dealer);
-        if(customers != null){
-            return new ResponseEntity<>(customersSave, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+    @PostMapping
+    @Transactional
+    public ResponseEntity create(@RequestBody @Valid CustomersCreateDTO customersCreateDTO, UriComponentsBuilder uriComponentsBuilder){
+        var customers = customersService.create(customersCreateDTO);
+        var uri = uriComponentsBuilder.path("/customers/{id}").buildAndExpand(customers.getId()).toUri();
+        return  ResponseEntity.created(uri).body(new CustomerDetailDTO(customers));
     }
 
-    @PostMapping("/update/{id_customer}/{id_dealer}")
-    public ResponseEntity<?> update(@RequestBody Customers customers, @PathVariable Integer id_customer, @PathVariable Integer id_dealer){
-        Customers customersSave =  customersService.update(customers, id_customer, id_dealer);
-        if(customers != null){
-            return new ResponseEntity<>(customersSave, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+    @PutMapping
+    @Transactional
+    public ResponseEntity update(@RequestBody @Valid CustomersUpdateDTO customersUpdateDTO){
+        var customers =  customersService.update(customersUpdateDTO);
+        return ResponseEntity.ok(new CustomerDetailDTO(customers));
+    }
+
+    @DeleteMapping
+    @Transactional
+    public ResponseEntity delete(@PathVariable Integer id_customer){
+        customersService.delete(id_customer);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<CustomersListDTO>> list(Pageable pageable){
+        var list = customersService.findAll(pageable).map(CustomersListDTO::new);
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity findById(@PathVariable Integer id){
+        var customer = customersService.findById(id);
+        return ResponseEntity.ok(new CustomerDetailDTO(customer));
     }
 
     @PostMapping("/createWithAddress/{id}")
@@ -58,29 +76,14 @@ public class CustomersController {
         return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
 
-    @DeleteMapping(value = "/delete/{id_customer}")
-    public ResponseEntity<?> delete(@PathVariable Integer id_customer){
-        customersService.delete(id_customer);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping(value = "/name/{name}")
+    public ResponseEntity<Page<CustomersListDTO>> findById(@PathVariable String name, Pageable pageable){
+        var customers = customersService.findByName(name, pageable).map(CustomersListDTO::new);
+        return ResponseEntity.ok(customers);
     }
-
-    @GetMapping(value = "/findAll")
-    public ResponseEntity<Page<CustomersListDTO>> findAll(Pageable pageable){
-        var list = customersService.findAll(pageable).map(CustomersListDTO::new);
-        return ResponseEntity.ok(list);
-    }
-
-    @GetMapping(value = "/findById/{id}")
-    public ResponseEntity<?> findById(@PathVariable Integer id){
-        return ResponseEntity.ok(customersService.findById(id));
-    }
-
-    @GetMapping(value = "/findByName/{name}")
-    public ResponseEntity<?> findById(@PathVariable String name){
-        return ResponseEntity.ok(customersService.findByName(name));
-    }
-    @GetMapping(value = "/findByNameAndEmail/{name}/{email}")
-    public ResponseEntity<?> findByNameAndEmail(@PathVariable String name, @PathVariable String email){
-        return ResponseEntity.ok(customersService.findByNameAndEmail(name, email));
+    @GetMapping(value = "/name/{name}/email/{email}")
+    public ResponseEntity<Page<CustomersListDTO>> nameAndEmail(@PathVariable String name, @PathVariable String email, Pageable pageable){
+        var customers = customersService.findByNameAndEmail(name, email, pageable).map(CustomersListDTO::new);
+        return ResponseEntity.ok(customers);
     }
 }

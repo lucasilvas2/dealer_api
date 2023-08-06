@@ -1,11 +1,14 @@
 package com.project.dealer_api.controller;
 
 import com.project.dealer_api.domain.address.Address;
+import com.project.dealer_api.domain.address.AddressCreateDTO;
+import com.project.dealer_api.domain.address.AddressDetailDTO;
 import com.project.dealer_api.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 
@@ -31,8 +34,10 @@ public class AddressController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid Address address){
-        return ResponseEntity.ok(addressService.create(address));
+    public ResponseEntity create(@RequestBody @Valid AddressCreateDTO addressCreateDTO, UriComponentsBuilder uriComponentsBuilder){
+        var address = addressService.create(addressCreateDTO);
+        var uri = uriComponentsBuilder.path("/adress/{id}").buildAndExpand(address.getId()).toUri();
+        return ResponseEntity.created(uri).body(new AddressDetailDTO(address));
     }
 
     @DeleteMapping(value = "/delete/{id}")

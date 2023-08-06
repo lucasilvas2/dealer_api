@@ -38,7 +38,7 @@ public class DealerController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<?> create(@RequestBody @Valid DealerCreateDTO dealerCreateDTO, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity create(@RequestBody @Valid DealerCreateDTO dealerCreateDTO, UriComponentsBuilder uriComponentsBuilder){
         var dealer = new Dealer(dealerCreateDTO);
         dealerService.create(dealer);
 

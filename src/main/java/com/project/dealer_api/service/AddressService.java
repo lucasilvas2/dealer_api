@@ -1,6 +1,8 @@
 package com.project.dealer_api.service;
 
 import com.project.dealer_api.domain.address.Address;
+import com.project.dealer_api.domain.address.AddressCreateDTO;
+import com.project.dealer_api.domain.address.AddressUpdateDTO;
 import com.project.dealer_api.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,42 +18,51 @@ public class AddressService {
         this.addressRepository = addressRepository;
     }
 
-    public Address create(Address address){
+    public Address create(AddressCreateDTO addressCreateDTO) {
+        var address = new Address(addressCreateDTO);
+        addressRepository.save(address);
         return addressRepository.save(address);
     }
 
-    public void delete(Integer id_address){
+    public Address update(AddressUpdateDTO addressUpdateDTO){
+        var address = addressRepository.getReferenceById(addressUpdateDTO.id());
+        address.update(addressUpdateDTO);
+        return address;
+    }
+
+    public void delete(Integer id_address) {
         addressRepository.deleteById(id_address);
     }
 
-    public List<Address> findAll(){
+    public List<Address> findAll() {
         return addressRepository.findAll();
     }
 
-    public Address findById(Integer id_address){
+    public Address findById(Integer id_address) {
         return addressRepository.findById(id_address).isPresent() ? addressRepository.findById(id_address).get() : null;
     }
 
-    public List<Address> findByStreet(String street){
+    public List<Address> findByStreet(String street) {
         return addressRepository.findByStreet(street);
     }
 
-    public List<Address> findByNumber(String number){
+    public List<Address> findByNumber(String number) {
         return addressRepository.findByNumber(number);
     }
 
-    public List<Address> findByCity(String city){
+    public List<Address> findByCity(String city) {
         return addressRepository.findByCity(city);
     }
 
-    public List<Address> findByPostalCode(String postalCode){
+    public List<Address> findByPostalCode(String postalCode) {
         return addressRepository.findByPostalCode(postalCode);
     }
 
-    public List<Address> findByDistrict(String district){
+    public List<Address> findByDistrict(String district) {
         return addressRepository.findByDistrict(district);
     }
-    public List<Address> findByStreetAndNumber(String street, String number){
+
+    public List<Address> findByStreetAndNumber(String street, String number) {
         return addressRepository.findByStreetAndNumber(street, number);
     }
 }

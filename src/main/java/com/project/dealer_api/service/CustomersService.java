@@ -2,7 +2,9 @@ package com.project.dealer_api.service;
 
 import com.project.dealer_api.domain.address.Address;
 import com.project.dealer_api.domain.customers.Customers;
+import com.project.dealer_api.domain.customers.CustomersCreateDTO;
 import com.project.dealer_api.domain.customers.CustomersDTO;
+import com.project.dealer_api.domain.customers.CustomersUpdateDTO;
 import com.project.dealer_api.domain.dealer.Dealer;
 import com.project.dealer_api.repository.AddressRepository;
 import com.project.dealer_api.repository.CustomersRepository;
@@ -33,9 +35,10 @@ public class CustomersService {
         this.addressService = addressService;
     }
 
-    public Customers create(Customers customers, Integer id_address, Integer id_dealer){
-        customers.setDealer(dealerService.findById(id_dealer));
-        customers.setAddress(addressService.findById(id_address));
+    public Customers create(CustomersCreateDTO customersCreateDTO){
+        var dealer = dealerService.findById(customersCreateDTO.dealer_id());
+        var address = addressService.create(customersCreateDTO.addressCreateDTO());
+        var customers = new Customers(customersCreateDTO, address,dealer);
         return customersRepository.save(customers);
     }
     public Customers createWithAddress(CustomersDTO customersDTO, Integer id_dealer){
@@ -59,11 +62,12 @@ public class CustomersService {
         return customersRepository.save(newCustomers);
     }
 
-    public Customers update(Customers customers, Integer id_customer, Integer id_dealer){
-        customers.setId(id_customer);
-        customers.setDealer(dealerService.findById(id_dealer));
-        customers.setAddress(customers.getAddress());
-        return customersRepository.save(customers);
+    public Customers update(CustomersUpdateDTO customersUpdateDTO){
+        var dealer = dealerService.findById(customersUpdateDTO.dealer_id());
+        var address = addressService.update(customersUpdateDTO.addressUpdateDTO());
+        var customers = customersRepository.getReferenceById(customersUpdateDTO.id());
+        customers.update(customersUpdateDTO, address, dealer);
+        return customers;
     }
 
     public Customers updateWithAddress(CustomersDTO customersDTO, Integer id_customer, Integer id_address, Integer id_dealer){
@@ -101,28 +105,28 @@ public class CustomersService {
         return customersRepository.findById(id_customer).isPresent() ? customersRepository.findById(id_customer).get() : null;
     }
 
-    public List<Customers> findByName(String name){
-        return customersRepository.findByName(name);
+    public Page<Customers> findByName(String name, Pageable pageable){
+        return customersRepository.findByName(name, pageable);
     }
-    public List<Customers> findByPhone(String phone){
-        return customersRepository.findByPhone(phone);
-    }
-
-    public List<Customers> findByEmail(String email){
-        return customersRepository.findByEmail(email);
+    public Page<Customers> findByPhone(String phone, Pageable pageable){
+        return customersRepository.findByPhone(phone, pageable);
     }
 
-    public List<Customers> findByAddress(String address){
-        return customersRepository.findByAddress(address);
+    public Page<Customers> findByEmail(String email, Pageable pageable){
+        return customersRepository.findByEmail(email, pageable);
     }
 
-    public List<Customers> findByDealer(Integer id_dealer){
+    public Page<Customers> findByAddress(String address, Pageable pageable){
+        return customersRepository.findByAddress(address,pageable);
+    }
+
+    public Page<Customers> findByDealer(Integer id_dealer, Pageable pageable){
         Dealer dealer = dealerService.findById(id_dealer);
-        return customersRepository.findByDealer(dealer);
+        return customersRepository.findByDealer(dealer,pageable);
     }
 
-    public List<Customers> findByNameAndEmail(String name, String email){
-        return customersRepository.findByNameAndEmail(name, email);
+    public Page<Customers> findByNameAndEmail(String name, String email, Pageable pageable){
+        return customersRepository.findByNameAndEmail(name, email, pageable);
     }
 }
 

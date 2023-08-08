@@ -8,8 +8,8 @@ import java.util.List;
 
 @Repository
 public interface CompanyRepository extends JpaRepository<Company,Integer> {
-    List<Company> findByName(String name);
-    List<Company> findByPhone(String phone);
-    List<Company> findByEmail(String email);
+    Company findByName(String name);
+    Company findByPhone(String phone);
+    Company findByEmail(String email);
 }
 

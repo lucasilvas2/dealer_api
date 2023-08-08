@@ -52,7 +52,7 @@ public class CustomersController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity findById(@PathVariable Integer id){
+    public ResponseEntity detail(@PathVariable Integer id){
         var customer = customersService.findById(id);
         return ResponseEntity.ok(new CustomerDetailDTO(customer));
     }

@@ -57,25 +57,6 @@ public class CustomersController {
         return ResponseEntity.ok(new CustomerDetailDTO(customer));
     }
 
-    @PostMapping("/createWithAddress/{id}")
-    public ResponseEntity<?> createWithAddress(@RequestBody CustomersDTO customersDTO, @PathVariable Integer id){
-        //return new ResponseEntity<>(customersBodyRequest, HttpStatus.OK);
-        Customers customersSave = customersService.createWithAddress(customersDTO, id);
-        if(customersSave != null){
-            return new ResponseEntity<>(customersSave, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-    }
-
-    @PostMapping("/updateWithAddress/{id_customer}/{id_address}/{id_dealer}")
-    public ResponseEntity<?> updateWithAddress(@RequestBody CustomersDTO customersDTO, @PathVariable Integer id_customer, @PathVariable Integer id_address, @PathVariable Integer id_dealer){
-        Customers customersSave = customersService.updateWithAddress(customersDTO, id_customer, id_address, id_dealer);
-        if(customersSave != null){
-            return new ResponseEntity<>(customersSave, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-    }
-
     @GetMapping(value = "/name/{name}")
     public ResponseEntity<Page<CustomersListDTO>> findById(@PathVariable String name, Pageable pageable){
         var customers = customersService.findByName(name, pageable).map(CustomersListDTO::new);
